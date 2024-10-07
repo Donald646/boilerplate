@@ -1,108 +1,89 @@
-'use client'
+"use client";
 
-import React, { Suspense, useEffect, useState } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { cn } from '@/lib/utils'
-import { User } from '@supabase/supabase-js'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import Link from "next/link";
+import { LayoutGrid, LogOut, MoonStar, Sun, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import React from 'react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
-import { useQuery } from '@supabase-cache-helpers/postgrest-swr'
-import { Button } from '../ui/button'
-import Link from 'next/link'
-import { SettingsIcon } from 'lucide-react'
-import { Skeleton } from '../ui/skeleton'
-
-interface ProfilePictureProps {
-  className?: string
-  user: User
-}
-
-function ProfilePictureSkeleton() {
-  return (
-      <Button variant={"ghost"} disabled={true}>
-
-        <div className='flex gap-2 items-center'>
-          <div>
-            <Skeleton className="h-4 w-24" />
-          </div>
-          <Avatar>
-            <Skeleton className="h-10 w-10 rounded-full" />
-          </Avatar>
-        </div>
-        <Skeleton className="h-10 w-full mb-2" />
-
-      </Button>
-
-  )
-}
-
-function useProfileData(userId: string) {
+import { useToast } from '@/components/ui/use-toast'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider
+} from "@/components/ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { useTheme } from 'next-themes'
+export function ProfilePicture({userDetails}:{userDetails:UserProfile}) {
+  const router = useRouter()
   const supabase = createClient()
-  const { data, error, isLoading } = useQuery(
-    supabase.from('users').select('username, avatar_url').eq('id', userId)
-  )
-
-
- 
-  if (error) {
-    console.error('Error fetching profile data:', error)
-    return null
+  const { toast } = useToast()
+  const { theme, setTheme } = useTheme()
+  const handleLogout = async () => {
+    const {error} = await supabase.auth.signOut({scope:"local"})
+    if(error){
+        toast({
+            title: "Uh oh! Something went wrong.",
+            description: error.message,
+            variant: "destructive",
+        });
+    }
+    router.push('/login') // Redirect to login page after logout
   }
 
-  return data?.[0] ?? null
-}
-
-function ProfilePictureContent({ className, user }: ProfilePictureProps) {
-  const profile = useProfileData(user.id)
-
-  if (!profile) {
-    return <ProfilePictureSkeleton />
-  }
-  console.log(profile)
   return (
-    <Popover>
-      <PopoverTrigger>
-        <Button className='h-fit' variant={"ghost"}>
-        <div className='flex gap-2 items-center'>
-          <div>
-            <p className="text-sm text-dark-blue font-semibold">@{profile.username}</p>
-          </div>
-          <Avatar className={cn("", className)}>
-            <AvatarImage src={profile.avatar_url ?? undefined} alt={`${profile.username}'s avatar`} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              <span className="text-2xl">
-                {profile.username ? profile.username[0].toUpperCase() : null}
-              </span>
-            </AvatarFallback>
-          </Avatar>
-        </div>
-        </Button>
-       
-      </PopoverTrigger>
-      <PopoverContent className='w-fit'>
-        <Button 
-          asChild
-          variant="ghost" 
-          className={cn("w-fit justify-start")}
-        >
-          <Link href="/settings">
-            <SettingsIcon className="h-5 w-5" />
-            <span className="ml-3">Settings</span>
-          </Link>
-        </Button>
-      </PopoverContent>
-    </Popover>
-  )
-}
+    <DropdownMenu>
+      <TooltipProvider disableHoverableContent>
+        <Tooltip delayDuration={100}>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="flex items-center space-x-2">
+                <Avatar className="h-8 w-8  h-8 px-2 rounded-full border-2">
+                <AvatarImage src={userDetails?.avatar_url ?? undefined} alt="Avatar" />
+                <AvatarFallback className="bg-transparent">{userDetails?.email ? userDetails.email[0] : '?'}</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col items-start">
+                  <p className="text-sm font-medium leading-none">{userDetails?.full_name}</p>
+                  <p className="text-xs leading-none text-muted-foreground">{userDetails?.email}</p>
+                </div>
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Profile</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
-export default function ProfilePicture(props: ProfilePictureProps) {
-  return (
-    <Suspense fallback={<ProfilePictureSkeleton />}>
-      <ProfilePictureContent {...props} />
-    </Suspense>
-  )
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuGroup>
+          <DropdownMenuItem className="hover:cursor-pointer " onClick={() => setTheme(theme === "dark" ? 'light' : 'dark')} asChild>
+            <div className="flex items-center">
+            {theme === "dark" ? <MoonStar className="w-4 h-4 mr-3 text-muted-foreground" /> : <Sun className="w-4 h-4 mr-3 text-muted-foreground"/>}
+            {theme === "dark" ? 'Switch to Light' : 'Switch to Dark'}
+            </div>
+           
+          </DropdownMenuItem>
+          <DropdownMenuItem className="hover:cursor-pointer" asChild>
+            <Link href="/account" className="flex items-center">
+              <User className="w-4 h-4 mr-3 text-muted-foreground" />
+              Account
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="hover:cursor-pointer" onClick={handleLogout}>
+          <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
+          Sign out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }

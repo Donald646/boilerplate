@@ -6,7 +6,7 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-swr'
 
 interface UserContextType {
   loading: boolean;
-  user: User | null;
+  userDetails: UserProfile | null;
   hasSubscription: boolean;
 }
 
@@ -14,17 +14,17 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 interface UserContextProviderProps {
   children: ReactNode;
-  user: User | null;
+  userDetails: UserProfile | null;
 }
 
 const supabase = createClient();
 
-export function UserContextProvider({ children, user }: UserContextProviderProps) {
-  const [loading, setLoading] = useState(!user);
+export function UserContextProvider({ children, userDetails }: UserContextProviderProps) {
+  const [loading, setLoading] = useState(!userDetails);
   const [hasSubscription, setHasSubscription] = useState(false);
 
   const { data: subscriptionData } = useQuery(
-    user ? supabase.from('subscriptions').select('status').eq('status', 'active').maybeSingle() : null
+    userDetails ? supabase.from('subscriptions').select('status').eq('status', 'active').maybeSingle() : null
   );
 
   useEffect(() => {
@@ -33,9 +33,9 @@ export function UserContextProvider({ children, user }: UserContextProviderProps
 
   const value = useMemo(() => ({
     loading,
-    user,
+    userDetails,
     hasSubscription,
-  }), [loading, user, hasSubscription]);
+  }), []);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

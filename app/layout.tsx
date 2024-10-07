@@ -6,34 +6,35 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Analytics } from '@vercel/analytics/react';
 import { CSPostHogProvider } from './providers'
 import { ThemeProvider } from "@/components/public/themeProvider";
+import { NAME } from "@/utils/config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "draftlyai",
-  description: "A powerful, comprehensive AI study library",
+  title: `${NAME}`,
+  description: "Description",
   keywords: [
   ],
   openGraph: {
     title: {
-      default: "draftlyai",
-      template: `%s | draftlyai`,
+      default: `${NAME}`,
+      template: `%s | ${NAME}`,
     },
     description:
       "An AI study tool box. A library of comprehensive AI study tools",
-    url: "https://www.draftlyai.com",
-    siteName: "draftlyai.com",
+    url: "https://www.name.com",
+    siteName: "name.com",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Draftly',
-    description: 'A powerful, comprehensive AI study library',
+    title: `${NAME}`,
+    description: 'Description',
     creator: '@draftly',
     images: [""]
   },
-  metadataBase: new URL("https://www.draftlyai.com"),
+  metadataBase: new URL("https://www.name.com"),
   icons: {
     icon: "/favicon.ico", // Path to your favicon
   },
@@ -55,8 +56,6 @@ export default function RootLayout({
           <Toaster />
           </TooltipProvider>
         </ThemeProvider>
-          
-
         </body>
       </CSPostHogProvider>
       

@@ -13,10 +13,10 @@ import { useUser } from '@/context/userContext'
 import { cn } from "@/lib/utils"
 import { MobileSidebar } from './mobileSidebar'
 import { Button } from '../ui/button'
-import ProfilePicture from './profilepicture'
 import PricingPopup from '../subscriptions/pricingpopup'
 import { Sidebar } from './sidebar'
 import { ThemeChanger } from '../public/themeButton'
+import { ProfilePicture } from './profilepicture'
 
 
 interface SidebarItem {
@@ -50,7 +50,7 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
 
 export default function Component({ children }: MainLayoutProps) {
   const pathname = usePathname()
-  const { hasSubscription, user } = useUser()
+  const { hasSubscription, userDetails } = useUser()
   const [isOpen, setIsOpen] = useState(true)
   const toggleSidebar = () => setIsOpen(!isOpen)
  

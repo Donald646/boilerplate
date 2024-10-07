@@ -9,6 +9,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { ChevronLeft, LayoutDashboard, FileText, Bookmark, Tag, Users, Settings, LogOut, Menu } from 'lucide-react'
+import { ProfilePicture } from './profilepicture'
+import { useUser } from '@/context/userContext'
 
 interface NavItem {
   title: string
@@ -39,6 +41,7 @@ const navSections: NavSection[] = [
 ]
 
 function NavContent({ isExpanded, pathname, onToggle }: { isExpanded: boolean; pathname: string; onToggle: () => void }) {
+    const {userDetails, hasSubscription} = useUser()
   return (
     <>
    <div className="flex items-center justify-between p-4 border-b relative">
@@ -102,18 +105,11 @@ function NavContent({ isExpanded, pathname, onToggle }: { isExpanded: boolean; p
       <div className="p-4 border-t">
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className={cn(
-                  'w-full text-foreground hover:bg-accent hover:text-accent-foreground',
-                  isExpanded ? 'justify-start' : 'justify-center'
-                )}
-              >
-<Users className="h-5 w-5" />
-                {isExpanded && <span className="ml-2">Account</span>}
-              </Button>
-            </TooltipTrigger>
+          {userDetails && (
+                <TooltipTrigger asChild>
+                    <ProfilePicture userDetails={userDetails} />
+                </TooltipTrigger>
+            )}
             <TooltipContent side="right">
               <p>Account</p>
             </TooltipContent>
