@@ -16,11 +16,11 @@ export async function GET(request: Request) {
       
       // Always redirect to '/dashboard' instead of using 'next'
       if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}/home`)
+        return NextResponse.redirect(`${origin}/dashboard`)
       } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}/home`)
+        return NextResponse.redirect(`https://${forwardedHost}/dashboard`)
       } else {
-        return NextResponse.redirect(`${origin}/home`)
+        return NextResponse.redirect(`${origin}/dashboard`)
       }
     }
   }

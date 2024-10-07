@@ -59,7 +59,6 @@ export default function Component({ children }: MainLayoutProps) {
       {/* Sidebar */}
      <Sidebar/>
 
-
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top Navbar */}
         {/* Main Content */}

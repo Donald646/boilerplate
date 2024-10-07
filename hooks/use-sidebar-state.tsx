@@ -3,18 +3,18 @@
 import { useState, useEffect } from 'react'
 
 export function useSidebarState() {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isExpanded, setisExpanded] = useState(true)
 
   useEffect(() => {
     const stored = localStorage.getItem('sidebarOpen')
-    setIsOpen(stored ? JSON.parse(stored) : true)
+    setisExpanded(stored ? JSON.parse(stored) : true)
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('sidebarOpen', JSON.stringify(isOpen))
-  }, [isOpen])
+    localStorage.setItem('sidebarOpen', JSON.stringify(isExpanded))
+  }, [isExpanded])
 
-  const toggleSidebar = () => setIsOpen(!isOpen)
+  const toggleSidebar = () => setisExpanded(!isExpanded)
 
-  return { isOpen, toggleSidebar }
+  return { isExpanded, toggleSidebar }
 }

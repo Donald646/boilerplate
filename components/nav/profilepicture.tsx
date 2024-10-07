@@ -23,11 +23,14 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from 'next-themes'
-export function ProfilePicture({userDetails}:{userDetails:UserProfile}) {
+import { useSidebarState } from "@/hooks/use-sidebar-state";
+
+export function ProfilePicture({userDetails, isExpanded}:{userDetails:UserProfile, isExpanded:boolean}) {
   const router = useRouter()
   const supabase = createClient()
   const { toast } = useToast()
   const { theme, setTheme } = useTheme()
+
   const handleLogout = async () => {
     const {error} = await supabase.auth.signOut({scope:"local"})
     if(error){
@@ -46,15 +49,17 @@ export function ProfilePicture({userDetails}:{userDetails:UserProfile}) {
         <Tooltip delayDuration={100}>
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center space-x-2">
-                <Avatar className="h-8 w-8  h-8 px-2 rounded-full border-2">
-                <AvatarImage src={userDetails?.avatar_url ?? undefined} alt="Avatar" />
-                <AvatarFallback className="bg-transparent">{userDetails?.email ? userDetails.email[0] : '?'}</AvatarFallback>
+              <Button variant="ghost" className="flex items-center justify-center space-x-2">
+                <Avatar className="h-8 w-8 rounded-full border-2">
+                  <AvatarImage src={userDetails?.avatar_url ?? undefined} alt="Avatar" />
+                  <AvatarFallback className="bg-transparent">{userDetails?.email ? userDetails.email[0] : '?'}</AvatarFallback>
                 </Avatar>
-                <div className="flex flex-col items-start">
-                  <p className="text-sm font-medium leading-none">{userDetails?.full_name}</p>
-                  <p className="text-xs leading-none text-muted-foreground">{userDetails?.email}</p>
-                </div>
+                {isExpanded && (
+                  <div className="flex flex-col items-start">
+                    <p className="text-sm font-medium leading-none">{userDetails?.full_name}</p>
+                    <p className="text-xs leading-none text-muted-foreground">{userDetails?.email}</p>
+                  </div>
+                )}
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>

@@ -20,10 +20,10 @@ export async function GET(request: NextRequest) {
     if (!error) {
       // redirect user to /dashboard on successful verification
       console.log("redirecting")
-      redirect('/home')
+      redirect('/dashboard')
     }
   }
 
   // redirect the user to an error page with some instructions
-  redirect('/home')
+  redirect('/dashboard')
 }

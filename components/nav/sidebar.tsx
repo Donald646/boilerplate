@@ -11,6 +11,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { ChevronLeft, LayoutDashboard, FileText, Bookmark, Tag, Users, Settings, LogOut, Menu } from 'lucide-react'
 import { ProfilePicture } from './profilepicture'
 import { useUser } from '@/context/userContext'
+import { useSidebarState } from '@/hooks/use-sidebar-state'
 
 interface NavItem {
   title: string
@@ -102,12 +103,12 @@ function NavContent({ isExpanded, pathname, onToggle }: { isExpanded: boolean; p
           ))}
         </nav>
       </ScrollArea>
-      <div className="p-4 border-t">
+      <div className="p-4 border-t flex flex items-center justify-center">
         <TooltipProvider>
           <Tooltip>
           {userDetails && (
                 <TooltipTrigger asChild>
-                    <ProfilePicture userDetails={userDetails} />
+                    <ProfilePicture userDetails={userDetails} isExpanded={isExpanded}/>
                 </TooltipTrigger>
             )}
             <TooltipContent side="right">
@@ -121,10 +122,8 @@ function NavContent({ isExpanded, pathname, onToggle }: { isExpanded: boolean; p
 }
 
 export function Sidebar() {
-  const [isExpanded, setIsExpanded] = useState(true)
+    const {isExpanded, toggleSidebar} = useSidebarState()
   const pathname = usePathname()
-
-  const toggleSidebar = () => setIsExpanded(!isExpanded)
 
   return (
     <>
