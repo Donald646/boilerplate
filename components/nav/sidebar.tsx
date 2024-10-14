@@ -103,7 +103,7 @@ function NavContent({ isExpanded, pathname, onToggle }: { isExpanded: boolean; p
           ))}
         </nav>
       </ScrollArea>
-      <div className="p-4 border-t flex flex items-center justify-center">
+      <div className="p-4 border-t flex flex items-center">
         <TooltipProvider>
           <Tooltip>
           {userDetails && (

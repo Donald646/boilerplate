@@ -9,10 +9,11 @@ import { ThemeProvider } from "@/components/public/themeProvider";
 import { NAME } from "@/utils/config";
 
 const inter = Inter({ subsets: ["latin"] });
-
+const description = 'put description here'
+const siteName = "boilerplate.com"
 export const metadata: Metadata = {
   title: `${NAME}`,
-  description: "Description",
+  description: description,
   keywords: [
   ],
   openGraph: {
@@ -20,21 +21,20 @@ export const metadata: Metadata = {
       default: `${NAME}`,
       template: `%s | ${NAME}`,
     },
-    description:
-      "An AI study tool box. A library of comprehensive AI study tools",
-    url: "https://www.name.com",
-    siteName: "name.com",
+    description: description,
+    url: `https://www.${siteName}`,
+    siteName: siteName,
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: 'summary_large_image',
     title: `${NAME}`,
-    description: 'Description',
-    creator: '@draftly',
+    description: description,
+    creator: '@donaldvchu',
     images: [""]
   },
-  metadataBase: new URL("https://www.name.com"),
+  metadataBase: new URL(`https://www.${siteName}`),
   icons: {
     icon: "/favicon.ico", // Path to your favicon
   },
