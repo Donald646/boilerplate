@@ -1,5 +1,4 @@
 import React from 'react'
-import LoginPage from './login'
 import { Metadata } from 'next'
 import Login from './login'
 import { NAME } from '@/utils/config'
@@ -10,6 +9,6 @@ export const metadata: Metadata = {
 }
 export default function Page() {
   return (
-    <Login/>
+<Login/>
   )
 }

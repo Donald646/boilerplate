@@ -49,7 +49,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <CSPostHogProvider>
       <body className={inter.className}>
-        <ThemeProvider>
+        <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           {children}
           <Analytics/>

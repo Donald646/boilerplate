@@ -11,7 +11,8 @@ create table users (
   billing_address jsonb,
   -- Stores your customer's payment instruments.
   payment_method jsonb,
-  email text  -- Added email column
+  email text,
+  role text default 'user'  -- Added role column with default value 'user'
 );
 alter table users enable row level security;
 create policy "Can view own user data." on users for select using (auth.uid() = id);
@@ -20,11 +21,11 @@ create policy "Can update own user data." on users for update using (auth.uid() 
 /**
 * This trigger automatically creates a user entry when a new user signs up via Supabase Auth.
 */ 
-create function public.handle_new_user() 
+reate function public.handle_new_user() 
 returns trigger as $$
 begin
-  insert into public.users (id, full_name, avatar_url, email)  -- Updated to include email
-  values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url', new.raw_user_meta_data->>'email');  -- Updated to include email
+  insert into public.users (id, full_name, avatar_url, email, role)  -- Updated to include role
+  values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url', new.raw_user_meta_data->>'email', 'user');  -- Updated to include default role
   return new;
 end;
 $$ language plpgsql security definer;

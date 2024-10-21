@@ -25,7 +25,7 @@ export default function PricingPopup({ className, variant, children="Upgrade" }:
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className={cn("", className)} variant={variant} elevated>
+        <Button className={cn("", className)} variant={"outline"}>
           {children}
         </Button>
       </DialogTrigger>
@@ -34,7 +34,7 @@ export default function PricingPopup({ className, variant, children="Upgrade" }:
       <DialogTitle className='font-bold'>Upgrade your plan to continue</DialogTitle>
       </DialogHeader>
         <div className="p-6 sm:p-0 sm:pr-6">
-          <PricingSectionCards isTable={false} showCTA={false} />
+          <PricingSectionCards />
         </div>
       </DialogContent>
     </Dialog>

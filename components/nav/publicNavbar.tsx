@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { MobileSidebar } from './mobileSidebar';
 import { RocketIcon, InfoIcon, DollarSignIcon, FlagIcon, LogInIcon, UserPlusIcon, GraduationCapIcon } from 'lucide-react';
 import getUser from '@/queries/user/getUser';
 import Logo from './logo';
+import { MobileSidebar } from './mobileSidebar';
 
 const PUBLIC_SIDEBAR_ITEMS = [
   {
@@ -46,12 +46,12 @@ export default async function PublicNavbar() {
       <div className='flex items-center gap-2'>
         {user ? (
           <Link href="/dashboard">
-            <Button className="" variant={"default"} elevated>Dashboard</Button>
+            <Button className="" variant={"default"}>Dashboard</Button>
           </Link>
         ) : (
           <>
             <Link href="/login">
-              <Button className='' elevated>Login</Button>
+              <Button className=''>Login</Button>
             </Link>
           </>
         )}    

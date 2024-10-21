@@ -38,7 +38,7 @@ export default function Lander() {
       <BlurFade delay={0.65} inView>
         <div className="flex flex-col gap-3 items-center justify-center">
           <Link href="/dashboard">
-<Button elevated size={"lg"} className='text-xl font-semibold pr-5'>Try it Free <ChevronRight className='ml-2' /></Button>
+<Button size={"lg"} className='text-xl font-semibold pr-5'>Try it Free <ChevronRight className='ml-2' /></Button>
           </Link>
           <AvatarHero/>
 

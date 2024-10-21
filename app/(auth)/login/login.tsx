@@ -6,7 +6,6 @@ import * as z from "zod"
 import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
-import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,8 +19,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import GoogleOAuth from "./googleoauth"
+import Image from "next/image"
 
-// Zod schema for email validation
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
 })
@@ -61,10 +60,11 @@ export default function Login() {
           emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       })
-      if (error) {
+      if (error) {      
         toast({
           title: "Uh oh! Something went wrong.",
-          description: `${error}`,
+          description: error.message,
+          variant: "destructive",
         })
         setIsLoading(false)
         setCountdown(0)
@@ -87,7 +87,7 @@ export default function Login() {
   }
 
   return (
-    <div className="w-full h-screen lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+    <div className="w-full h-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
@@ -98,7 +98,7 @@ export default function Login() {
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 bg-background focus-within:bg-background">
               <FormField
                 control={form.control}
                 name="email"
@@ -112,7 +112,7 @@ export default function Login() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isLoading} elevated>
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading
                   ? `Resend Link in ${countdown}s`
                   : 'Send OTP'}
@@ -132,19 +132,11 @@ export default function Login() {
           </div>
 
           <GoogleOAuth />
-{/*   <div className="text-center text-sm">
-            Don{"'"}t have an account?{" "}
-            <Link href="/signup" className="font-medium text-primary hover:underline">
-              Sign Up
-            </Link>
-          </div>*/}
-        
         </div>
       </div>
 
-      {/* Image Section */}
       <div className="hidden lg:block p-3">
-        <Image
+      <Image
           src="/loginRight.png"
           alt="Image"
           width={1920}

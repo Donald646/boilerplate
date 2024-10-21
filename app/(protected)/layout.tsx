@@ -1,12 +1,10 @@
 import MainLayout from "@/components/nav/mainlayout";
-import { UserContextProvider } from "@/context/userContext";
 import getUser from "@/queries/user/getUser";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { NAME } from "@/utils/config";
-import { getUserDetails } from "@/queries/user/getUserDetails";
+import { headers } from 'next/headers'
 import { createClient } from "@/utils/supabase/server";
-
 
 export const metadata: Metadata = {
   title: `Home | ${NAME}`,
@@ -20,19 +18,13 @@ export default async function RootLayout({
 }>) {
   const supabase = createClient()
   const user = await getUser(supabase)
-  const userDetails = await getUserDetails(user?.id, supabase)
-  console.log(userDetails)
   if (!user) {
-    redirect("/login")
+    redirect(`/login`);
   }
 
   return (
- <UserContextProvider userDetails={userDetails}>
-      <MainLayout>
-        {children}
-      </MainLayout>
-    </UserContextProvider>
-
-   
+    <MainLayout user={user}>
+      {children}
+    </MainLayout>
   );
 }

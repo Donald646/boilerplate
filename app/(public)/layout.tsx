@@ -1,4 +1,5 @@
 import PublicNavbar from "@/components/nav/publicNavbar";
+import Footer from "@/components/public/footer";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,6 +13,7 @@ export default function RootLayout({
         <>
         <PublicNavbar/>
         {children}
+        <Footer/>
         </>
         
   );

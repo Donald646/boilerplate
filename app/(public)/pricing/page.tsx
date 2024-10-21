@@ -16,22 +16,8 @@ const blobs = [
 ];
 export default function Page() {
   return (
-    <div className='pt-10 h-full relative'> {/* Added relative positioning */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {blobs.map((blob, index) => (
-          <div
-            key={index}
-            className="absolute w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-gradient-to-br from-primary/15 via-primary/25 to-primary-dark/15 rounded-full blur-[100px] animate-pulse"
-            style={{
-              top: blob.top,
-              left: blob.left,
-              transform: `translate(-50%, -50%) scale(${blob.size})`,
-              animationDuration: `${blob.duration}s`,
-            }}
-          ></div>
-        ))}
-      </div>
-      <PricingSectionCards isTable={true}/>
+    <div className='pt-10'> {/* Added relative positioning */}
+      <PricingSectionCards />
     </div>
   )
 }

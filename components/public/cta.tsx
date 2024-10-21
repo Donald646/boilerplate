@@ -34,7 +34,6 @@ export default function CTA({title = `Stop Wasting Time Studying`, secondTitle="
               size="lg" 
               variant="default" 
               className="font-bold text-sm sm:text-md w-full sm:w-auto bg-white hover:bg-white text-black"
-              elevated
             >
 
               Start Studying Faster

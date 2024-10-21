@@ -21,7 +21,7 @@ export default function GoogleOAuth() {
     <Button
       onClick={handleGoogleSignIn}
       variant="outline"
-      className="w-full bg-white text-gray-600 font-medium border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+      className=""
     >
       <div className="flex items-center justify-center">
         <Image

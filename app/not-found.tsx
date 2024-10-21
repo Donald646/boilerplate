@@ -16,7 +16,7 @@ Looks like a bug?<Link href=""><Button variant={"link"} className='pl-1'>Contact
         </p>
       </div>
       <Link href="/settings" passHref>
-        <Button elevated className='bg-primary'>
+        <Button className='bg-primary'>
 Dashboard
         </Button>
       </Link>

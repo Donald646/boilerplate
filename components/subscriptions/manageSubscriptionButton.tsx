@@ -22,7 +22,7 @@ export default async function ManageSubscriptionButton({user}: {user:User | null
    return (
       hasSubscription ? (
          <Link href="/manage-subscription">
-            <Button elevated>Manage Subscription</Button>
+            <Button>Manage Subscription</Button>
          </Link>
       ) : null
    )

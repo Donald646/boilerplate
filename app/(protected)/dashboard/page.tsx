@@ -2,6 +2,8 @@ import React from 'react'
 import { createClient } from '@/utils/supabase/server';
 import { getSubscription } from '@/queries/getSubscription';
 import getUser from '@/queries/user/getUser';
+import Link from 'next/link';
+import { Input } from '@/components/ui/input';
 
 export default async function Page() {
     const supabase = createClient();
@@ -12,6 +14,6 @@ export default async function Page() {
       ]);
 
   return (
-    <div>Page</div>
+    <div> <Input className="" /></div>
   )
 }
