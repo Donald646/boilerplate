@@ -4,6 +4,7 @@ export const getUserDetails = cache(async (uuid: string | undefined, supabase:Su
     const { data: userDetails } = await supabase
       .from('users')
       .select('*')
+      .eq("id", uuid)
       .single();
     return userDetails;
   });

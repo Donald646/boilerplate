@@ -52,12 +52,14 @@ export default function Login() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
     setCountdown(60)
+    const searchParams = new URLSearchParams(window.location.search);
+    const redirectUrl = searchParams.get('redirect') || "/dashboard"
     try {
       const { data, error } = await supabase.auth.signInWithOtp({
         email: values.email,
         options: {
           shouldCreateUser: true,
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?redirect=${encodeURI(redirectUrl)}`,
         },
       })
       if (error) {      

@@ -7,7 +7,7 @@ import { PRICE_LIST } from '@/utils/config';
 import { redirect } from 'next/navigation';
 
 export async function createCheckoutSession({option}:{option:number}): Promise<string | null> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
 
   if (!user) {

@@ -9,10 +9,12 @@ export default function GoogleOAuth() {
   const supabase = createClient()
 
   const handleGoogleSignIn = async () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const redirectUrl = searchParams.get('redirect') || "/dashboard"
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${window.location.origin}/auth/callback?redirect=${encodeURI(redirectUrl)}`,
       },
     })
   }

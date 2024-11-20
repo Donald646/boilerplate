@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 
 export default async function Page() {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const [user, subscription] = await Promise.all([
         getUser(supabase),

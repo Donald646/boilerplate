@@ -10,6 +10,7 @@ import { Quote } from "lucide-react"
 
 import { cn } from "@/lib/utils";
 import Marquee from '../ui/marquee';
+import Image from 'next/image';
 interface Testimonial {
   name: string
   role: string
@@ -123,7 +124,7 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center gap-3">
-        <img className="rounded-full" width="40" height="40" alt="" src={img} />
+        <Image className="rounded-full" width="40" height="40" alt="" src={img} />
         <div className="flex flex-col">
           <figcaption className="text-base font-medium dark:text-white">
             {name}

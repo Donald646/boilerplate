@@ -16,10 +16,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const user = await getUser(supabase)
+  const headerList = await headers();
+  const pathname = headerList.get("x-current-path") || "/dashboard";
+
   if (!user) {
-    redirect(`/login`);
+    redirect(`/login?redirect=${encodeURIComponent(pathname)}`);
   }
 
   return (
